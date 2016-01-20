@@ -25,7 +25,4 @@ galaxy_info:
   - development
   - system
 
-dependencies:
-  - get_url
-  - command
-  - apt
+dependencies: []
