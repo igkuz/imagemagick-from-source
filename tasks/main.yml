@@ -1,0 +1,45 @@
+---
+
+- name: download imagemagick source
+  get_url: >
+    url=http://www.imagemagick.org/download/ImageMagick-{{ imagemagick_version }}.tar.xz
+    dest=/usr/local/src/ImageMagick-{{ imagemagick_version }}.tar.xz
+
+
+- name: extract imagemagick source
+  command: >
+    creates=/usr/local/src/ImageMagick-{{ imagemagick_version }}
+    chdir=/usr/local/src
+    tar xf /usr/local/src/ImageMagick-{{ imagemagick_version }}.tar.xz
+
+- name: install dependent pacakges for building imagemagick
+  apt: pkg={{ item }} state=present force=yes
+  with_items:
+    - libpng-dev
+    - libjpeg-dev
+    - libgif-dev
+    - libtiff-dev
+    - libfontconfig-dev
+    - libxml2-dev
+    - libxslt-dev
+    - zlib1g-dev
+    - libbz2-dev
+
+- name: configure imagemagick
+  command: >
+    creates=/usr/local/src/ImageMagick-{{ imagemagick_version }}/config.status
+    chdir=/usr/local/src/ImageMagick-{{ imagemagick_version }}
+    ./configure --libdir=/usr/local/lib64 \
+      --with-quantum-depth={{ quantum_depth }}
+
+- name: build imagemagick
+  command: >
+    creates=/usr/local/src/ImageMagick-{{ imagemagick_version }}/utilities/.libs/convert
+    chdir=/usr/local/src/ImageMagick-{{ imagemagick_version }}
+    make
+
+- name: install imagemagick
+  command: >
+    creates=/usr/local/bin/convert
+    chdir=/usr/local/src/ImageMagick-{{ imagemagick_version }}
+    make install

@@ -1,0 +1,30 @@
+---
+galaxy_info:
+  author: Igor Kuznetsov
+  description: 
+  company:
+  license: license (MIT)
+  min_ansible_version: 1.2
+  - name: Ubuntu
+    versions:
+  #  - all
+  #  - lucid
+  #  - maverick
+  #  - natty
+  #  - oneiric
+  #  - precise
+  #  - quantal
+  #  - raring
+  #  - saucy
+      - trusty
+  #  - utopic
+  #  - vivid
+
+  categories:
+  - development
+  - system
+
+dependencies:
+  - get_url
+  - command
+  - apt
