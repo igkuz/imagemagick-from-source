@@ -1,3 +1,6 @@
 ---
+# You must provide the exact imagemagick version
 imagemagick_version: "6.9.3-1"
+
+# Specific configure option
 quantum_depth: 16
